@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* The .active class is applied to a <NavLink> element
+automatically when the route it points to is active. For example,
+when the user navigates to the /about page, the <NavLink to='/about'> will have the .active class. */
+.active hr{
+    @apply block
+}
