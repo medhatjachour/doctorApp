@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,6 +6,12 @@
 /* The .active class is applied to a <NavLink> element
 automatically when the route it points to is active. For example,
 when the user navigates to the /about page, the <NavLink to='/about'> will have the .active class. */
+*{
+    font-family: 'Outfit', sans-serif;
+}
 .active hr{
     @apply block
+}
+::-webkit-scrollbar {
+ @apply hidden
 }
