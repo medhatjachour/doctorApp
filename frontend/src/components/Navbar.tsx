@@ -4,11 +4,13 @@ import { useState } from "react";
 const Navbar = () => {
   const navigate = useNavigate();
 
-//   const [showMenu, setShowMenu] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
   const [token, setToken] = useState(true);
   return (
     <div className=" flex items-center justify-between text-sm py-4 mb-5 border-b border-b-gray-400">
-       <NavLink to="/"><img className=" w-44 cursor-pointer" src={assets.logo} alt="logo" /></NavLink>
+      <NavLink to="/">
+        <img className=" w-44 cursor-pointer" src={assets.logo} alt="logo" />
+      </NavLink>
       <ul className="hidden md:flex items-start gap-5 font-medium">
         <NavLink to="/">
           <li className="py-1">Home</li>
@@ -59,7 +61,10 @@ const Navbar = () => {
                 >
                   My Appointments
                 </button>
-                <button  onClick={() => setToken(false)} className="hover:text-black cursor-pointer py-2">
+                <button
+                  onClick={() => setToken(false)}
+                  className="hover:text-black cursor-pointer py-2"
+                >
                   Logout
                 </button>
               </div>
@@ -73,6 +78,45 @@ const Navbar = () => {
             Create account
           </button>
         )}
+        <button
+          onClick={() => setShowMenu(!showMenu)}
+          className="w-6 md:hidden"
+        >
+          <img src={assets.menu_icon} alt="menu" />
+        </button>
+        {/* mobile menu */}
+        <div className={`${showMenu? "fixed w-full":"h-0 w-0"} md:hidden right-0 top-0 bottom-0 z-20 overflow-hidden bg-white transition-all `}>
+          <div className="flex items-center justify-between px-5 py-6">
+            <img className="w-3/6 " src={assets.logo} alt="logo" />
+            <button
+              onClick={() => setShowMenu(false)}
+              className="w-7 p-0 border-none bg-transparent"
+            >
+              <img className="w-7" src={assets.cross_icon} alt="cross icon" />
+            </button>
+          </div>
+          <ul className="flex flex-col items-center gap-2 mt-5 px-5 text-xl font-medium">
+            <NavLink to="/" onClick={() => setShowMenu(false)}>
+              <li className="py-1">Home</li>
+              <hr className="border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden" />
+            </NavLink>
+
+            <NavLink to="/doctors" onClick={() => setShowMenu(false)}>
+              <li className="py-1">All Doctors</li>
+              <hr className="border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden" />
+            </NavLink>
+
+            <NavLink to="/about" onClick={() => setShowMenu(false)}>
+              <li className="py-1">ABOUT</li>
+              <hr className=" border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden" />
+            </NavLink>
+
+            <NavLink to="/Contact" onClick={() => setShowMenu(false)}>
+              <li className="py-1">Contact</li>
+              <hr className="border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden" />
+            </NavLink>
+          </ul>
+        </div>
       </div>
     </div>
   );
