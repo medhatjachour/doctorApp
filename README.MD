@@ -15,13 +15,13 @@ Welcome to the **Doctor Appointment Website** repository! This project is built 
 
 ## 🖼️ **Screenshots**
 
-![Home Page](https://github.com/medhatjachour/doctorApp/blob/main/samples/img1.png?raw=true)
+![Home Page](https://github.com/medhatjachour/doctorApp/blob/main/samples/1.png?raw=true)
 *Home Page - Browse doctors and book appointments.*
 
-![Doctor Profile](https://github.com/medhatjachour/doctorApp/blob/main/samples/img2.png?raw=true)
+![Doctor Profile](https://github.com/medhatjachour/doctorApp/blob/main/samples/2.png?raw=true)
 *Doctor Profile - View doctor details and available slots.*
 
-![Appointment Booking](https://github.com/medhatjachour/doctorApp/blob/main/samples/img3.png?raw=true)
+![Appointment Booking](https://github.com/medhatjachour/doctorApp/blob/main/samples/3.png?raw=true)
 *Appointment Booking - Select a time slot and confirm your appointment.*
 
 ---
