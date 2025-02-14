@@ -53,20 +53,24 @@ const addDoctor = async (req, res) => {
     }
 }
 
-// ADMIN LOGIN
-const loginAdmin = async (req,res)=>{
+const loginAdmin = async (req, res) => {
     try {
-        const {email,password} = req.body
-        if(email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD ){
-            const token  = jwt.sign(email + password,process.env.JWT_SECRET)
-            return res.status(200).json({success:true,token});
-        }else{
-            
-        res.status(500).json({success:false,message: `Invalid credentials`});
+        const { email, password } = req.body;
+        if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
+            const token = jwt.sign(email + password, process.env.JWT_SECRET);
+            res.cookie('authToken', token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production', // Ensure the cookie is only sent over HTTPS in production
+                sameSite: 'strict', // Prevents CSRF attacks
+            });
+            const message = "Login successful. Token has been set.";
+            return res.status(200).json({ success: true, token, message });
+        } else {
+            return res.status(401).json({ success: false, message: 'Invalid credentials' });
         }
     } catch (error) {
-        res.status(500).json({success:false,message: ` ${error}`});
+        return res.status(500).json({ success: false, message: `Server error: ${error.message}` });
     }
-}
+};
 
 export{addDoctor,loginAdmin}
