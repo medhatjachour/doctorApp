@@ -1,11 +1,23 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AppContext } from "../context/appContext";
 const Navbar = () => {
   const navigate = useNavigate();
 
   const [showMenu, setShowMenu] = useState(false);
-  const [token, setToken] = useState(true);
+
+  const appContext = useContext(AppContext);
+
+  const { token, setToken,userData } = appContext || {};
+
+  const logOut = () => {
+    if (setToken) {
+      setToken("");
+    }
+    localStorage.removeItem("token");
+  };
+
   return (
     <div className=" flex items-center justify-between text-sm py-4 mb-5 border-b border-b-gray-400">
       <NavLink to="/">
@@ -34,11 +46,11 @@ const Navbar = () => {
       </ul>
 
       <div className=" flex items-center gap-4">
-        {token ? (
+        {token && userData? (
           <div className="flex items-center gap-2 cursor-pointer group relative">
             <img
               className=" w-8 rounded-full"
-              src={assets.profile_pic}
+              src={userData.image}
               alt="profile pic"
             />
             <img
@@ -62,7 +74,7 @@ const Navbar = () => {
                   My Appointments
                 </button>
                 <button
-                  onClick={() => setToken(false)}
+                  onClick={logOut}
                   className="hover:text-black cursor-pointer py-2"
                 >
                   Logout
@@ -85,7 +97,11 @@ const Navbar = () => {
           <img src={assets.menu_icon} alt="menu" />
         </button>
         {/* mobile menu */}
-        <div className={`${showMenu? "fixed w-full":"h-0 w-0"} md:hidden right-0 top-0 bottom-0 z-20 overflow-hidden bg-white transition-all `}>
+        <div
+          className={`${
+            showMenu ? "fixed w-full" : "h-0 w-0"
+          } md:hidden right-0 top-0 bottom-0 z-20 overflow-hidden bg-white transition-all `}
+        >
           <div className="flex items-center justify-between px-5 py-6">
             <img className="w-3/6 " src={assets.logo} alt="logo" />
             <button

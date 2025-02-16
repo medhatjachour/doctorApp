@@ -48,7 +48,7 @@ const addDoctor = async (req, res) => {
         return res.status(200).json({success:true, message: ` doctor ${doctorData.name} added `});
 
     } catch (error) {
-        res.status(500).json({success:false,message: `Server Error ${error}`});
+        return  res.status(500).json({success:false,message: `Server Error ${error}`});
         
     }
 }
@@ -73,4 +73,14 @@ const loginAdmin = async (req, res) => {
     }
 };
 
-export{addDoctor,loginAdmin}
+const getAllDoctors = async(req,res)=>{
+try {
+    const doctors = await doctorModel.find({}).select('-password')
+    return res.json({success:true,doctors})
+} catch (error) {
+    return res.json({success:false,message:error.message})
+}
+}
+
+
+export{addDoctor,loginAdmin,getAllDoctors}

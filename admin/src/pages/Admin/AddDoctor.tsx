@@ -71,7 +71,8 @@ const AddDoctor = () => {
           toast.error(data.message);
         }
       }
-    } catch (error) {
+    } 
+    catch (error) {
       console.log(error);
       if (axios.isAxiosError(error) && error.response) {
         toast.error(error.response.data.message);
@@ -89,7 +90,7 @@ const AddDoctor = () => {
         <div className="flex items-center gap-4 mb-8 text-gray-500">
           <label htmlFor="doc-img">
             <img
-              className="w-16 bg-gray-100 rounded-full cursor-pointer"
+              className="w-16 object-cover bg-gray-100 rounded-full cursor-pointer"
               src={docImg ? URL.createObjectURL(docImg) : assets.upload_area}
               alt="upload"
             />
