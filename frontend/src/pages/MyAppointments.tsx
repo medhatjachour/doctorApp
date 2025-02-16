@@ -4,11 +4,11 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { AppointmentInterface } from "../types/doctorsTypes";
 
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements } from '@stripe/react-stripe-js';
-import CheckoutForm from "../components/CheckoutForm";
+// import { loadStripe } from '@stripe/stripe-js';
+// import { Elements } from '@stripe/react-stripe-js';
+// import CheckoutForm from "../components/CheckoutForm";
 
-const stripePromise = loadStripe(import.meta.env.STRIPE_PUBLISH_KEY); // Replace with your Stripe publishable key
+// const stripePromise = loadStripe(import.meta.env.STRIPE_PUBLISH_KEY); // Replace with your Stripe publishable key
 
 function formatDate(dateStr: string): string {
   const [day, month, year] = dateStr.split("-").map(Number);
@@ -36,8 +36,8 @@ const MyAppointments = () => {
   const { backendUrl, token, getDoctorsData } = context || {};
 
   const [appointments, setAppointments] = useState<AppointmentInterface[]>([]);
-  const [showPaymentForm, setShowPaymentForm] = useState(false);
-  const [clientSecret, setClientSecret] = useState<string>('');
+  // const [showPaymentForm, setShowPaymentForm] = useState(false);
+  // const [clientSecret, setClientSecret] = useState<string>('');
   const getUserAppointments = async () => {
     try {
       const { data } = await axios.get(backendUrl + "api/user/appointments", {
@@ -45,6 +45,8 @@ const MyAppointments = () => {
       });
       if (data.success) {
         setAppointments(data.appointments.reverse());
+        console.log(data.appointments.reverse())
+        console.log(data.appointments)
       }
     } catch (error) {
       console.log(error);
@@ -94,9 +96,9 @@ const MyAppointments = () => {
 
       if (data.success) {
         console.log(data.paymentIntent);
-        
-        setShowPaymentForm(true);
-        setClientSecret(data.paymentIntent.clientSecret);
+        // verify and show stripe 
+        // setShowPaymentForm(true);
+        // setClientSecret(data.paymentIntent.clientSecret);
         getUserAppointments();
         if (getDoctorsData) {
           getDoctorsData();
@@ -157,7 +159,13 @@ const MyAppointments = () => {
             </div>
             <div></div>
             <div className="flex flex-col gap-2 justify-end">
-              {!appointment.cancelled && (
+              
+            {!appointment.cancelled && appointment.payment&&(
+                <button  className="text-sm bg-stone-500 sm:min-w-48 py-2 border hover:bg-stone-600 hover:text-white transition-all duration-300">
+                  Paid{" "}
+                </button>
+              )}
+              {!appointment.cancelled && !appointment.payment&& (
                 <button onClick={()=>payAppointment(appointment._id)} className="text-sm text-stone-500 sm:min-w-48 py-2 border hover:bg-primary hover:text-white transition-all duration-300">
                   Pay Online{" "}
                 </button>
@@ -179,7 +187,9 @@ const MyAppointments = () => {
           </div>
         ))}
       </div>
-        {showPaymentForm && clientSecret && (
+
+        
+        {/* {showPaymentForm && clientSecret && (
               <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
                 <div className="bg-white p-6 rounded-lg">
                   <button
@@ -193,7 +203,7 @@ const MyAppointments = () => {
                   </Elements>
                 </div>
               </div>
-            )}
+            )} */}
     </div>
   );
 };
