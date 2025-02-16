@@ -33,6 +33,7 @@ export interface User {
 
 
 
+
 export interface AppointmentInterface {
   _id:string;
   userId: string;
@@ -50,10 +51,9 @@ export interface AppointmentInterface {
 }
 
 
-export type DoctorsInterface = Doctor[];
 
 
-export interface DoctorInterface {
+export interface DoctorsInterface {
 
 
     _id: string;
@@ -71,6 +71,7 @@ export interface DoctorInterface {
     about: string;
 
     fees: number;
+    available:boolean;
 
     address: {
 
@@ -88,4 +89,11 @@ export interface DoctorInterface {
  export interface TimeSlotInterface {
   datetime: Date;
   time: string;
+}
+
+export interface DashboardInterface {
+  doctors ?:number,
+  patients ?:number,
+  appointments ?:number,
+  latestAppointment ?:AppointmentInterface[]
 }

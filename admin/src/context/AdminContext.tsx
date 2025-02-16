@@ -1,20 +1,32 @@
 // AppContext.tsx
 import axios from "axios";
-import { createContext, ReactNode, useCallback, useMemo, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
 import { toast } from "react-toastify";
-import {  AppointmentInterface, DoctorsInterface } from "../types/doctorsTypes";
+import {
+  AppointmentInterface,
+  DashboardInterface,
+  DoctorsInterface,
+} from "../types/doctorsTypes";
 
 interface AdminContextValue {
   setAToken: (token: string) => void;
   setAppointments: React.Dispatch<React.SetStateAction<AppointmentInterface[]>>;
+  getDashboardData: () => void;
   getAllDoctors: () => void;
   getAllAppointments: () => void;
-  changeAvailability:(docId :  string ) => void; 
-  cancelAppointment:(appointmentId :  string ) => void; 
+  changeAvailability: (docId: string) => void;
+  cancelAppointment: (appointmentId: string) => void;
   aToken: string | null;
   backendUrl: string;
+  dashData: DashboardInterface;
   doctors: DoctorsInterface[];
-  appointments: AppointmentInterface[]
+  appointments: AppointmentInterface[];
 }
 
 export const AdminContext = createContext<AdminContextValue | undefined>(
@@ -32,56 +44,63 @@ const AdminContextProvider: React.FC<AdminContextProviderProps> = ({
     localStorage.getItem("aToken") ? localStorage.getItem("aToken") : ""
   );
   const [doctors, setDoctors] = useState([]);
+  const [dashData, setDashData] = useState({});
   const [appointments, setAppointments] = useState<AppointmentInterface[]>([]);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const getAllDoctors = useCallback(async () => {
-      try {
-        const { data } = await axios.get(backendUrl + 'api/admin/all-doctors', {
-          headers: { aToken },
-        });
-        if (data.success) {
-          setDoctors(data.doctors);
-        } else {
-          toast.error(data.message);
-        }
-      } catch (error) {
-        if (axios.isAxiosError(error) && error.response) {
-          toast.error(error.response.data.message);
-        } else {
-          toast.error("An unexpected error occurred");
-        }
+    try {
+      const { data } = await axios.get(backendUrl + "api/admin/all-doctors", {
+        headers: { aToken },
+      });
+      if (data.success) {
+        setDoctors(data.doctors);
+      } else {
+        toast.error(data.message);
       }
-    }, [aToken, backendUrl]);
-    
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("An unexpected error occurred");
+      }
+    }
+  }, [aToken, backendUrl]);
+
   const getAllAppointments = useCallback(async () => {
-      try {
-        const { data } = await axios.get(backendUrl + 'api/admin/all-appointments', {
+    try {
+      const { data } = await axios.get(
+        backendUrl + "api/admin/all-appointments",
+        {
           headers: { aToken },
-        });
+        }
+      );
+      if (data.success) {
+        setAppointments(data.appointments);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("An unexpected error occurred");
+      }
+    }
+  }, [aToken, backendUrl]);
+
+  const changeAvailability = useCallback(
+    async (docId: string) => {
+      try {
+        const { data } = await axios.post(
+          backendUrl + "api/admin/change-availability",
+          { docId },
+          { headers: { aToken } }
+        );
         if (data.success) {
-          setAppointments(data.appointments);
-        } else {
-          toast.error(data.message);
-        }
-      } catch (error) {
-        if (axios.isAxiosError(error) && error.response) {
-          toast.error(error.response.data.message);
-        } else {
-          toast.error("An unexpected error occurred");
-        }
-      }
-    }, [aToken, backendUrl]);
-
-    const changeAvailability = useCallback(async(docId:string)=>{
-      try {
-        const {data}  = await axios.post(backendUrl + 'api/admin/change-availability',{docId},{headers:{aToken}})
-        if(data.success){
-
           toast.success(data.message);
-          getAllDoctors()
-        }else{
-          
+          getAllDoctors();
+        } else {
           toast.error(data.message);
         }
       } catch (error) {
@@ -91,16 +110,22 @@ const AdminContextProvider: React.FC<AdminContextProviderProps> = ({
           toast.error("An unexpected error occurred");
         }
       }
-    }, [aToken, backendUrl, getAllDoctors]);
+    },
+    [aToken, backendUrl, getAllDoctors]
+  );
 
-    const cancelAppointment = useCallback(async(appointmentId:string)=>{
+  const cancelAppointment = useCallback(
+    async (appointmentId: string) => {
       try {
-        const {data}  = await axios.post(backendUrl + 'api/admin/cancel-appointments',{appointmentId},{headers:{aToken}})
-        if(data.success){
+        const { data } = await axios.post(
+          backendUrl + "api/admin/cancel-appointments",
+          { appointmentId },
+          { headers: { aToken } }
+        );
+        if (data.success) {
           toast.success(data.message);
-          getAllAppointments()
-        }else{
-          
+          getAllAppointments();
+        } else {
           toast.error(data.message);
         }
       } catch (error) {
@@ -110,21 +135,56 @@ const AdminContextProvider: React.FC<AdminContextProviderProps> = ({
           toast.error("An unexpected error occurred");
         }
       }
-    }, [aToken, backendUrl, getAllAppointments]);
+    },
+    [aToken, backendUrl, getAllAppointments]
+  );
+
+  const getDashboardData = useCallback(async () => {
+    try {
+      const { data } = await axios.get(backendUrl + "api/admin/dashboard", {
+        headers: { aToken },
+      });
+      if (data.success) {
+        setDashData(data.dashData);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("An unexpected error occurred");
+      }
+    }
+  }, [aToken, backendUrl]);
 
   const value = useMemo(
     () => ({
       aToken,
       setAToken,
       backendUrl,
+      getDashboardData,
+      dashData,
       doctors,
       appointments,
-      setAppointments,cancelAppointment,
+      setAppointments,
+      cancelAppointment,
       getAllDoctors,
       getAllAppointments,
-      changeAvailability
+      changeAvailability,
     }),
-    [aToken, backendUrl, doctors, appointments, getAllDoctors, getAllAppointments, changeAvailability, cancelAppointment]
+    [
+      aToken,
+      backendUrl,
+      doctors,
+      appointments,
+      getAllDoctors,
+      getAllAppointments,
+      changeAvailability,
+      cancelAppointment,
+      dashData,
+      getDashboardData,
+    ]
   );
 
   return (
