@@ -34,7 +34,6 @@ const MyProfile = () => {
   const updateUserProfileData = async () => {
     try {
       const formData = new FormData();
-      console.log(userData);
       formData.append('name', userData ? userData.name : "");
       formData.append('phone', userData ? userData.phone : "");
       formData.append(

@@ -21,7 +21,7 @@ const App: React.FC = () => {
 
   return (
     <div>
-      {aToken ||dToken? (
+      {aToken || dToken? (
         <div className='bg-[#f8f8f8]'>
           <Navbar/>
 
@@ -30,7 +30,7 @@ const App: React.FC = () => {
             <SideBar/>
             <Routes>
               {/* admin */}
-              <Route path='/' element={<></>} />
+             {aToken&&  <Route path='/' element={<DashBoard/>} />}${dToken&& <Route path='/' element={<DoctorDashboard/>} />}
               <Route path='/admin-dashboard' element={<DashBoard/>} />
               <Route path='/all-appointments' element={<AllAppointments/>} />
               <Route path='/add-doctor' element={<AddDoctor/>} />

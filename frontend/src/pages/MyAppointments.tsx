@@ -44,12 +44,10 @@ const MyAppointments = () => {
         headers: { token },
       });
       if (data.success) {
-        setAppointments(data.appointments.reverse());
-        console.log(data.appointments.reverse())
-        console.log(data.appointments)
+        setAppointments(data.appointments);
+
       }
     } catch (error) {
-      console.log(error);
       if (axios.isAxiosError(error) && error.response) {
         toast.error(error.response.data.message);
       } else {
@@ -76,7 +74,6 @@ const MyAppointments = () => {
         toast.error(data.message);
       }
     } catch (error) {
-      console.log(error);
       if (axios.isAxiosError(error) && error.response) {
         toast.error(error.response.data.message);
       } else {
@@ -84,7 +81,6 @@ const MyAppointments = () => {
       }
     }
   };
-
 
   const payAppointment = async (appointmentId: string) => {
     try {
@@ -95,8 +91,7 @@ const MyAppointments = () => {
       );
 
       if (data.success) {
-        console.log(data.paymentIntent);
-        // verify and show stripe 
+        // verify and show stripe
         // setShowPaymentForm(true);
         // setClientSecret(data.paymentIntent.clientSecret);
         getUserAppointments();
@@ -108,7 +103,6 @@ const MyAppointments = () => {
         toast.error(data.message);
       }
     } catch (error) {
-      console.log(error);
       if (axios.isAxiosError(error) && error.response) {
         toast.error(error.response.data.message);
       } else {
@@ -116,19 +110,18 @@ const MyAppointments = () => {
       }
     }
   };
-  
-
 
   useEffect(() => {
     if (token) {
       getUserAppointments();
     }
   }, [token]);
+  
   return (
     <div>
       <p className="pb-3 mt-12 font-medium">My appointments</p>
       <div>
-        {appointments.slice(0, 5).map((appointment, index) => (
+        {appointments?.slice().reverse().map((appointment, index) => (
           <div
             className="w-full grid grid-cols-[1fr_2fr] gap-4 sm:flex sm:gap-6 py-2 border-b"
             key={index}
@@ -159,23 +152,30 @@ const MyAppointments = () => {
             </div>
             <div></div>
             <div className="flex flex-col gap-2 justify-end">
-              
-            {!appointment.cancelled && appointment.payment&&(
-                <button  className="text-sm bg-stone-500 sm:min-w-48 py-2 border hover:bg-stone-600 hover:text-white transition-all duration-300">
-                  Paid{" "}
-                </button>
-              )}
-              {!appointment.cancelled && !appointment.payment&& (
-                <button onClick={()=>payAppointment(appointment._id)} className="text-sm text-stone-500 sm:min-w-48 py-2 border hover:bg-primary hover:text-white transition-all duration-300">
-                  Pay Online{" "}
-                </button>
-              )}
+              {!appointment.cancelled &&
+                appointment.payment &&
+                !appointment.isCompleted && (
+                  <button className="text-sm bg-stone-500 sm:min-w-48 py-2 border hover:bg-stone-600 hover:text-white transition-all duration-300">
+                    Paid{" "}
+                  </button>
+                )}
+              {!appointment.cancelled &&
+                !appointment.payment &&
+                !appointment.isCompleted && (
+                  <button
+                    onClick={() => payAppointment(appointment._id)}
+                    className="text-sm text-stone-500 sm:min-w-48 py-2 border hover:bg-primary hover:text-white transition-all duration-300"
+                  >
+                    Pay Online{" "}
+                  </button>
+                )}
 
-              {appointment.cancelled ? (
+              {appointment.cancelled && !appointment.isCompleted && (
                 <p className="text-sm  text-center sm:min-w-48 py-2  border  rounded-sm border-red-600 text-red-600  transition-all duration-300">
                   Appointment cancelled
                 </p>
-              ) : (
+              )}
+              {!appointment.cancelled && !appointment.isCompleted && (
                 <button
                   onClick={() => cancelAppointment(appointment?._id)}
                   className="text-sm text-stone-500 sm:min-w-48 py-2 border hover:bg-red-600 hover:text-white transition-all duration-300"
@@ -183,13 +183,19 @@ const MyAppointments = () => {
                   Cancel Appointment
                 </button>
               )}
+              {appointment.isCompleted ? (
+                <button className="text-sm  sm:min-w-48 py-2 text-green-600  border-green-600 border hover:bg-green-600 hover:text-white transition-all duration-300">
+                  Completed
+                </button>
+              ) : (
+                <span></span>
+              )}
             </div>
           </div>
         ))}
       </div>
 
-        
-        {/* {showPaymentForm && clientSecret && (
+      {/* {showPaymentForm && clientSecret && (
               <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
                 <div className="bg-white p-6 rounded-lg">
                   <button

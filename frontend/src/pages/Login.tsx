@@ -18,7 +18,6 @@ const Login = () => {
 
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(email, password, name);
     try {
       if (state === "Sign Up" && setToken) {
         const { data } = await axios.post(backendUrl + "api/user/register", {
@@ -45,7 +44,6 @@ const Login = () => {
         }
       }
     } catch (error) {
-      console.log(error);
       if (axios.isAxiosError(error) && error.response) {
         toast.error(error.response.data.message);
       } else {

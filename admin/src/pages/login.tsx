@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { DoctorContext } from "../context/DoctorContext";
 
 const Login = () => {
-  const [state, setState] = useState("Admin");
+  const [state, setState] = useState("Doctor");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { setAToken, backendUrl } = useContext(AdminContext) || {

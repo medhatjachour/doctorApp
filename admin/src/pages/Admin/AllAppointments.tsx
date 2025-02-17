@@ -63,18 +63,23 @@ const AllAppointments = () => {
               {currencySymbol}
               {appointment.amount}
             </p>
-            {appointment.cancelled ? (
-              <p className="text-red-400 text-xs font-medium"> cancelled </p>
-            ) : (
-              <button onClick={()=>cancelAppointment && cancelAppointment(appointment._id)}>
-              <img
-              
-                className="w-10 cursor-pointer"
-                src={assets.cancel_icon}
-                alt="cancel"
-              />
-              </button>
-            )}
+            {(() => {
+              if (appointment.cancelled) {
+                return <p className="text-red-400 text-xs font-medium"> cancelled </p>;
+              } else if (appointment.isCompleted) {
+                return <p className="text-green-600 text-xs font-medium">completed </p>;
+              } else {
+                return (
+                  <button onClick={() => cancelAppointment && cancelAppointment(appointment._id)}>
+                    <img
+                      className="w-10 cursor-pointer"
+                      src={assets.cancel_icon}
+                      alt="cancel"
+                    />
+                  </button>
+                );
+              }
+            })()}
           </div>
         ))}
       </div>

@@ -67,7 +67,7 @@ const DashBoard = () => {
                   <p className="text-gray-800 font-medium">{item.docData.name}</p>
                   <p className="text-gray-600">{formatDate&&formatDate(item.slotDate)}</p>
                 </div>
-                {item.cancelled ? (
+                {/* {item.cancelled ? (
                   <p className="text-red-400 text-xs font-medium">
                     {" "}
                     cancelled{" "}
@@ -84,7 +84,25 @@ const DashBoard = () => {
                       alt="cancel"
                     />
                   </button>
-                )}
+                )} */}
+
+{(() => {
+              if (item.cancelled) {
+                return <p className="text-red-400 text-xs font-medium"> cancelled </p>;
+              } else if (item.isCompleted) {
+                return <p className="text-green-600 text-xs font-medium">completed </p>;
+              } else {
+                return (
+                  <button onClick={() => cancelAppointment && cancelAppointment(item._id)}>
+                    <img
+                      className="w-10 cursor-pointer"
+                      src={assets.cancel_icon}
+                      alt="cancel"
+                    />
+                  </button>
+                );
+              }
+            })()}
               </div>
             ))}
           </div>
