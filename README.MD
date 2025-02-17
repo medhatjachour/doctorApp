@@ -195,6 +195,7 @@ This project is a full-stack web application designed to streamline the process 
 ## Admin Endpoints
 - **POST /api/admin/login** - Log in a admin.
 - **POST /api/admin/add-doctor** - Add a new doctor.
+- **DELETE /api/admin/delete-doctor** - Delete doctor.
 - **GET /api/admin/all-doctors** - Fetch all doctors.
 - **POST /api/admin/change-availability** - Update a doctor change-availability.
 - **GET /api/admin/all-appointments** - Fetch all appointments
