@@ -134,51 +134,51 @@ This project is a full-stack web application designed to streamline the process 
       npm run dev 
     ```
 
-### File Structure
+## File Structure
 
-#### Frontend
+### Frontend
+- `frontend/`
+  - `src/`
+    - `assets/`           # pics and assets
+    - `components/`       # Reusable components
+    - `context/`          # Context API for state management
+    - `pages/`            # Application pages
+    - `types/`            # contain all the types needed
+    - `App.js`            # Main application component
+    - `index.js`          # Entry point
+    - `tailwind.config.js` # Tailwind CSS configuration
 
-├── src/
-│ ├── assets/ # Pics and assets
-│ ├── components/ # Reusable components
-│ ├── context/ # Context API for state management
-│ ├── pages/ # Application pages
-│ ├── types/ # Contains all the types needed
-│ ├── App.js # Main application component
-│ ├── index.js # Entry point
-│ └── tailwind.config.js # Tailwind CSS configuration
+### Admin
+- `admin/`
+  - `src/`
+    - `assets/`           # pics and assets
+    - `components/`       # Reusable components
+    - `context/`          # Context API for state management
+    - `pages/`            # Application pages
+    - `types/`            # contain all the types needed
+    - `App.js`            # Main application component
+    - `index.js`          # Entry point
+    - `tailwind.config.js` # Tailwind CSS configuration
 
-#### Admin
-
-├── src/
-│ ├── assets/ # Pics and assets
-│ ├── components/ # Reusable components
-│ ├── context/ # Context API for state management
-│ ├── pages/ # Application pages
-│ ├── types/ # Contains all the types needed
-│ ├── App.js # Main application component
-│ ├── index.js # Entry point
-│ └── tailwind.config.js # Tailwind CSS configuration
-
-#### Backend
-
-├── config/
-│ ├── cloudinary.js # Cloudinary configuration
-│ └── db.js # MongoDB connection
-├── controllers/
-│ ├── adminController.js # Admin logic
-│ ├── doctorController.js # Doctor logic
-│ └── userController.js # User logic
-├── middlewares/ # Custom middlewares
-├── models/
-│ ├── User.js # User model
-│ ├── Doctor.js # Doctor model
-│ └── Appointment.js # Appointment model
-├── routes/
-│ ├── adminRoutes.js # Admin routes
-│ ├── doctorRoutes.js # Doctor routes
-│ └── userRoutes.js # User routes
-└── server.js # Entry point
+### Backend
+- `backend/`
+  - `config/`
+    - `cloudinary.js`     # Cloudinary configuration
+    - `db.js`             # MongoDB connection
+  - `controllers/`
+    - `adminController.js` # Admin logic
+    - `doctorController.js` # Doctor logic
+    - `userController.js`  # User logic
+  - `middlewares/`        # Custom middlewares
+  - `models/`
+    - `User.js`           # User model
+    - `Doctor.js`         # Doctor model
+    - `Appointment.js`    # Appointment model
+  - `routes/`
+    - `adminRoutes.js`    # Admin routes
+    - `doctorRoutes.js`   # Doctor routes
+    - `userRoutes.js`     # User routes
+  - `server.js`           # Entry point
 
 
 ## User Endpoints
