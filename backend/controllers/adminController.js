@@ -157,7 +157,6 @@ const appointmentCancel = async (req, res) => {
         .json({ success: false, message: `Server Error ${error}` });
     }
 };
-
 const adminDashboardData  = async (req, res) => {
     try {
       const doctors = await doctorModel.find({})

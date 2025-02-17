@@ -1,11 +1,13 @@
 import React, { useContext, useEffect } from "react";
 import { AdminContext } from "../../context/AdminContext";
 import { assets } from "../../assets/assets";
+import { AppContext } from "../../context/AppContext";
 
 const DashBoard = () => {
   const { aToken, cancelAppointment, getDashboardData, dashData } =
     useContext(AdminContext) || {};
-
+  const {formatDate } =
+    useContext(AppContext) || {};
   useEffect(() => {
     if (aToken && getDashboardData) {
       getDashboardData();
@@ -63,7 +65,7 @@ const DashBoard = () => {
                 <img className="rounded-full w-11" src={item.docData.image} alt={item.docData.name} />
                 <div className="flex-1 text-sm">
                   <p className="text-gray-800 font-medium">{item.docData.name}</p>
-                  <p className="text-gray-600">{item.slotDate}</p>
+                  <p className="text-gray-600">{formatDate&&formatDate(item.slotDate)}</p>
                 </div>
                 {item.cancelled ? (
                   <p className="text-red-400 text-xs font-medium">

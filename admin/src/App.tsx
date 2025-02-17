@@ -10,13 +10,18 @@ import DashBoard from './pages/Admin/DashBoard';
 import AllAppointments from './pages/Admin/AllAppointments';
 import AddDoctor from './pages/Admin/AddDoctor';
 import DoctorsList from './pages/Admin/DoctorsList';
+import { DoctorContext } from './context/DoctorContext';
+import DoctorDashboard from './pages/Doctor/DoctorDashboard';
+import DoctorAppointment from './pages/Doctor/DoctorAppointment';
+import DoctorProfile from './pages/Doctor/DoctorProfile';
 
 const App: React.FC = () => {
   const { aToken } = useContext(AdminContext) || {aToken:null};
+  const { dToken } = useContext(DoctorContext) || {dToken:null};
 
   return (
     <div>
-      {aToken ? (
+      {aToken ||dToken? (
         <div className='bg-[#f8f8f8]'>
           <Navbar/>
 
@@ -24,11 +29,16 @@ const App: React.FC = () => {
           <div className='flex items-start'>
             <SideBar/>
             <Routes>
+              {/* admin */}
               <Route path='/' element={<></>} />
               <Route path='/admin-dashboard' element={<DashBoard/>} />
               <Route path='/all-appointments' element={<AllAppointments/>} />
               <Route path='/add-doctor' element={<AddDoctor/>} />
               <Route path='/doctor-list' element={<DoctorsList/>} />
+              {/* doctor */}
+              <Route path='/doctor-dashboard' element={<DoctorDashboard/>} />
+              <Route path='/doctor-appointments' element={<DoctorAppointment/>} />
+              <Route path='/doctor-profile' element={<DoctorProfile/>} />
             </Routes>
           </div>
         </div>

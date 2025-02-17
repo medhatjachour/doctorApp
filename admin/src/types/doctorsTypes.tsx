@@ -97,3 +97,11 @@ export interface DashboardInterface {
   appointments ?:number,
   latestAppointment ?:AppointmentInterface[]
 }
+
+
+export interface DocDashboardInterface {
+  earnings ?:number,
+  patients ?:number,
+  appointments ?:number,
+  latestAppointments ?:AppointmentInterface[]
+}

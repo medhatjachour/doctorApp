@@ -2,14 +2,16 @@ import { useContext, useState } from "react";
 import { AdminContext } from "../context/AdminContext";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { DoctorContext } from "../context/DoctorContext";
 
 const Login = () => {
   const [state, setState] = useState("Admin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setAToken, backendUrl } = useContext(AdminContext)|| {
+  const { setAToken, backendUrl } = useContext(AdminContext) || {
     backendUrl: "$VITE_BACKEND_URL='http://localhost:4000/'",
-  };;
+  };
+  const { setDToken } = useContext(DoctorContext) || {};
 
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
@@ -17,30 +19,48 @@ const Login = () => {
     e.preventDefault();
     try {
       if (state === "Admin" && setAToken) {
-        const {data} = await axios.post(backendUrl + "api/admin/login", {
+        const { data } = await axios.post(backendUrl + "api/admin/login", {
           email,
           password,
-        })
+        });
         if (data.success) {
-            localStorage.setItem('aToken',data.token)
-            toast.success(data.message)
-            setAToken(data.token);
-        }else{
-            toast.error(data.message )
+          localStorage.setItem("aToken", data.token);
+          toast.success(data.message);
+          setAToken(data.token);
+        } else {
+          toast.error(data.message);
+        }
+      } else {
+        const { data } = await axios.post(backendUrl + "api/doctor/login", {
+          email,
+          password,
+        });
+        if (data.success) {
+          localStorage.setItem("dToken", data.token);
+          toast.success(data.message);
+          if (setDToken) {
+            setDToken(data.token);
+            
+          }
+        } else {
+          toast.error(data.message);
         }
       }
     } catch (error) {
-        console.log(error);
-        if (axios.isAxiosError(error) && error.response) {
-          toast.error(error.response.data.message);
-        } else {
-          toast.error("An unexpected error occurred");
-        }
+      console.log(error);
+      if (axios.isAxiosError(error) && error.response) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("An unexpected error occurred");
+      }
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="min-h-[80vh] flex items-center w-full">
+    <form
+      onSubmit={handleSubmit}
+      className="min-h-[80vh] flex items-center w-full"
+    >
       <div className="flex flex-col gap-3 rounded-xl m-auto items-start p-8 min-w-[350px] sm:min-w-96 text-[#5e5e5e] text-sm shadow-lg">
         <p className="text-2xl font-semibold m-auto">
           <span className="text-primary">{state}</span> login

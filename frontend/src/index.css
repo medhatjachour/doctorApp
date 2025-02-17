@@ -32,4 +32,11 @@ when the user navigates to the /about page, the <NavLink to='/about'> will have 
   .horizontal-scroll::-webkit-scrollbar {
     display: none;
   }
+  .long-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 5; /* Number of lines to show */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   

@@ -2,10 +2,13 @@ import React, { useContext } from "react";
 import { assets } from "../assets/assets";
 import { AdminContext } from "../context/AdminContext"; // Ensure AdminContext is correctly imported
 import { NavLink, useNavigate } from "react-router-dom";
+import { DoctorContext } from "../context/DoctorContext";
 
 const Navbar: React.FC = () => {
   const adminContext = useContext(AdminContext);
+  const doctorContext = useContext(DoctorContext);
   const { aToken, setAToken } = adminContext || {};
+  const { dToken, setDToken } = doctorContext || {};
 
 
   const navigate = useNavigate()
@@ -14,7 +17,13 @@ const Navbar: React.FC = () => {
     if (aToken&&setAToken) {
         navigate('/')
       setAToken("");
+      if (setDToken)setDToken("");
       localStorage.removeItem("aToken");
+      localStorage.removeItem("dToken");
+    }else if ( dToken&& setDToken) {
+      if (setDToken)setDToken("");
+      localStorage.removeItem("dToken");
+      navigate('/')
     }
   };
 
@@ -33,7 +42,7 @@ const Navbar: React.FC = () => {
           {aToken ? "Admin" : "Doctor"}
         </p>
       </div>
-      {aToken && <button className="bg-primary text-white text-sm px-10 py-2 rounded-xl cursor-pointer" onClick={logOut}>Log Out</button>}
+      {aToken || dToken && <button className="bg-primary text-white text-sm px-10 py-2 rounded-xl cursor-pointer" onClick={logOut}>Log Out</button>}
     </div>
   );
 };
