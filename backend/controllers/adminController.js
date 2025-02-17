@@ -116,6 +116,22 @@ const getAllDoctors = async (req, res) => {
   }
 };
 
+
+const deleteDoctor = async (req, res) => {
+  try {
+    const { docId } = req.body;
+    // Find and delete the doctor by ID
+    const doctor = await doctorModel.findByIdAndDelete(docId);
+    if (!doctor) {
+      return res.json({ success: false, message: "Doctor not found" });
+    }
+    return res.json({ success: true, message: "Doctor deleted successfully", doctor });
+  } catch (error) {
+    return res.json({ success: false, message: error.message });
+  }
+};
+
+
 const getAllAppointments = async (req, res) => {
   try {
     const appointments = await appointmentModel.find({});
@@ -176,4 +192,4 @@ const adminDashboardData  = async (req, res) => {
     }
   };
 
-export { addDoctor, loginAdmin, getAllDoctors, getAllAppointments ,appointmentCancel,adminDashboardData};
+export { addDoctor, loginAdmin, getAllDoctors, getAllAppointments ,appointmentCancel,adminDashboardData,deleteDoctor};
