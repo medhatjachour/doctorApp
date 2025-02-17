@@ -47,7 +47,6 @@ const Login = () => {
         }
       }
     } catch (error) {
-      console.log(error);
       if (axios.isAxiosError(error) && error.response) {
         toast.error(error.response.data.message);
       } else {

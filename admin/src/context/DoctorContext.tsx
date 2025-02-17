@@ -46,7 +46,16 @@ const DoctorContextProvider: React.FC<DoctorContextProviderProps> = ({
   const [appointments, setAppointments] = useState<AppointmentInterface[]>([]);
   const [dashData, setDashData] = useState({});
   
-  const [doctorProfile, setDoctorsProfile] = useState<Doctor>({} as Doctor);
+  const [doctorProfile, setDoctorsProfile] = useState<Doctor>({
+    address: {
+      line1: '',
+      line2: '',
+    },
+    fees: 0,
+    available: false,
+   
+    // Add other necessary fields as per your Doctor type definition
+  } as Doctor);
 
   const getDoctorAppointments = useCallback(async () => {
     try {
@@ -55,7 +64,6 @@ const DoctorContextProvider: React.FC<DoctorContextProviderProps> = ({
       });
       if (data.success) {
         setAppointments(data.appointments);
-        console.log(data.appointments);
       } else {
         toast.error(data.message);
       }

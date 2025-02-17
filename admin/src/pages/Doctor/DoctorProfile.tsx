@@ -31,7 +31,6 @@ const DoctorProfile = () => {
         toast.error(data.message);
       }
     } catch (error) {
-      console.log(error);
       if (axios.isAxiosError(error) && error.response) {
         toast.error(error.response.data.message);
       } else {
@@ -45,7 +44,6 @@ const DoctorProfile = () => {
       getDoctorProfile();
     }
   }, [dToken, getDoctorProfile]);
-  console.log(doctorProfile);
   
   return (
     doctorProfile && (

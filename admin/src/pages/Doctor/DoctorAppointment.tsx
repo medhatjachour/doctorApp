@@ -13,9 +13,8 @@ const DoctorAppointment = () => {
     useEffect(() => {
       if (dToken && getDoctorAppointments) {
         getDoctorAppointments();
-        console.log(appointments);
       }
-    }, [dToken]);
+    }, [dToken, getDoctorAppointments]);
   return (
     <div className="w-full max-w-6xl m-5 ">
          <p className="mb-3 text-lg font-medium">All Appointments</p>
