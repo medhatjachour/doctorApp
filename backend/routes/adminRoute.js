@@ -9,7 +9,8 @@ const adminRouter = express.Router();
 adminRouter.post('/login', loginAdmin);
 adminRouter.post('/add-doctor', authAdmin ,upload.single('image'), addDoctor);
 adminRouter.get('/all-doctors', authAdmin,getAllDoctors);
-adminRouter.delete('/delete-doctor', authAdmin, deleteDoctor);
+// Update the route to include the doctor ID as a URL parameter
+adminRouter.delete('/delete-doctor/:docId', authAdmin, deleteDoctor);
 adminRouter.post('/change-availability', authAdmin,changeAvailability);
 adminRouter.get('/all-appointments', authAdmin,getAllAppointments);
 adminRouter.post('/cancel-appointments', authAdmin,appointmentCancel);

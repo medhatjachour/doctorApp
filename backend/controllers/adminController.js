@@ -119,8 +119,12 @@ const getAllDoctors = async (req, res) => {
 
 const deleteDoctor = async (req, res) => {
   try {
-    const { docId } = req.body;
+    const { docId } = req.params;
     // Find and delete the doctor by ID
+
+    // Cancel all appointments related to this doctor
+    await appointmentModel.updateMany({ docId }, { cancelled: true });
+
     const doctor = await doctorModel.findByIdAndDelete(docId);
     if (!doctor) {
       return res.json({ success: false, message: "Doctor not found" });
