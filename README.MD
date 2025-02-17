@@ -10,9 +10,9 @@ A full-stack web application built with React for the frontend and Node.js/Expre
 *Home Page - Browse doctors and book appointments.*
 
 ![Doctor Profile](https://github.com/medhatjachour/doctorApp/blob/main/samples/2.png?raw=true)
-*Doctor Profile - View doctor details and available slots.*
+*Admin  - View doctor details and available slots.*
 
-![Appointment Booking](https://github.com/medhatjachour/doctorApp/blob/main/samples/3.png?raw=true)
+![Appointment Booking](https://github.com/medhatjachour/doctorApp/blob/main/samples/a1.png?raw=true)
 *Appointment Booking - Select a time slot and confirm your appointment.*
 
 ___
