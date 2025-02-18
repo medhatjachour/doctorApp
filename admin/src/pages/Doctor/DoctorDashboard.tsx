@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { AppContext } from '../../context/AppContext';
 import { DoctorContext } from '../../context/DoctorContext';
 import { assets } from '../../assets/assets';
