@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../context/appContext";
 import { DoctorInterface, TimeSlotInterface } from "../types/doctorsTypes";
@@ -20,14 +20,14 @@ const Appointments = () => {
   const [docSlotsIndex, setDocSlotsIndex] = useState(2);
   const [docSlotsTime, setDocSlotsTime] = useState("");
 
-  const fetchDocData = async () => {
+  const fetchDocData = useCallback(async () => {
     const doc = doctors?.find((doc) => doc._id === docId);
     if (doc) {
       setDocInfo(doc);
     } else {
       console.error("doc is undefined");
     }
-  };
+  }, [docId, doctors]);
 
   const getAvailableSlots = async () => {
     setDocSlots([]);
@@ -108,7 +108,7 @@ const Appointments = () => {
   
   useEffect(() => {
     fetchDocData();
-  }, [docId, doctors]);
+  }, [docId, doctors, fetchDocData]);
 
   useEffect(() => {
     getAvailableSlots();
@@ -166,7 +166,7 @@ const Appointments = () => {
         <div
           className={`flex gap-3 items-center w-full overflow-x-scroll mt-4 horizontal-scroll`}
         >
-          {docSlots.length >= 0 &&
+          {docSlots?.length >= 0 &&
             docSlots.map((slot, index) => (
               <button
               onClick={() => setDocSlotsIndex(index)}
@@ -178,12 +178,12 @@ const Appointments = () => {
                 }`}
               >
                 <p>{slot[0] && daysOfWeek[slot[0].datetime.getDay()]}</p>
-                <p>{slot[0] && slot[0].datetime.getDate()}</p>
+                <p>{slot[0]?.datetime.getDate()}</p>
               </button>
             ))}
         </div>
         <div className="flex items-center gap-3 w-full overflow-x-scroll mt-4 horizontal-scroll">
-          {docSlots.length >= 0 &&
+          {docSlots?.length >= 0 &&
             docSlots[docSlotsIndex]?.map((slot, index) => (
               <button onClick={() => setDocSlotsTime(slot.time)}
                 className={`text-sm font-light flex-shrink-0 px-5 py-2 rounded-full cursor-pointer ${slot.time ===docSlotsTime ? "bg-primary text-white" : "border border-gray-300"}`}

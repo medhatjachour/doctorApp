@@ -90,7 +90,7 @@ const AppContextProvider: React.FC<AppContextProviderProps> = ({ children }) => 
       setToken,
       backendUrl
     }),
-    [backendUrl, doctors, getDoctorsData, token, userData]
+    [backendUrl, doctors, getDoctorsData, token, userData, loadUserProfileData]
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

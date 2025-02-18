@@ -13,6 +13,7 @@ const Doctors = () => {
   const [filterDoc, setFilterDoc] = useState<DoctorInterface[]>([]);
 
   const [showFilter, setShowFilter] = useState(false);
+  
   const applyFilter= () =>{
     if(specialty){
       setFilterDoc(doctors.filter((doctor) => doctor.speciality === specialty))
@@ -23,6 +24,7 @@ const Doctors = () => {
   useEffect(() => {
     applyFilter()
   }, [doctors,specialty]);
+
   return (
     <div>  
       <p className="text-gray-600">Browse through the doctors specialist. </p>

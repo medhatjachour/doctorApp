@@ -28,7 +28,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ clientSecret }) => {
     const { error: submitError } = await elements.submit();
 
     if (submitError) {
-      setErrorMessage(submitError.message || 'An unknown error occurred');
+      setErrorMessage(submitError?.message ?? 'An unknown error occurred');
       return;
     }
 
@@ -41,7 +41,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ clientSecret }) => {
     });
 
     if (error) {
-      setErrorMessage(error.message || 'An unknown error occurred');
+      setErrorMessage(error.message ?? 'An unknown error occurred');
     }
   };
 
